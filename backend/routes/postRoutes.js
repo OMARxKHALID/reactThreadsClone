@@ -6,6 +6,7 @@ import {
   likeAndUnLikePost,
   replyToPost,
   getFeedPosts,
+  getUserPosts,
 } from "../controllers/postControllers.js";
 import protectedRoute from "../middlewares/protectedRoute.js";
 
@@ -13,10 +14,11 @@ const reducer = express.Router();
 
 reducer.get("/feed", protectedRoute, getFeedPosts);
 reducer.get("/:id", getPosts);
+reducer.get("/user/:username", getUserPosts);
 reducer.post("/create", protectedRoute, createPost);
 reducer.delete("/:id", protectedRoute, deletePost);
-reducer.post("/like/:id", protectedRoute, likeAndUnLikePost);
-reducer.post("/reply/:id", protectedRoute, replyToPost)
+reducer.put("/like/:id", protectedRoute, likeAndUnLikePost);
+reducer.put("/reply/:id", protectedRoute, replyToPost)
 
 
 export default reducer;

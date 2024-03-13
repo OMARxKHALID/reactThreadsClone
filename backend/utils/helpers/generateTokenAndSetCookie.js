@@ -6,7 +6,6 @@ const generateTokenAndSetCookie = async(userId, res) => {
         httpOnly: true, // more secure
         maxAge: 15 * 24 * 60 * 60 * 1000, // 15 days
         sameSize: 'strict', //CSRF
-        secure: process.env.NODE_ENV === 'development', // https only in development
     });
     return token;
 }

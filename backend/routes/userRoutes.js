@@ -11,12 +11,12 @@ import protectedRoute from "../middlewares/protectedRoute.js";
 
 const reducer = express.Router();
 
-reducer.get("/profile/:username", getUserProfile)
+reducer.get("/profile/:query", getUserProfile)
 reducer.post("/signup", signUpUser);
 reducer.post("/login", logInUser);
 reducer.post("/logout", logOutUser);
 reducer.post("/follow/:id", protectedRoute, followAndUnfollowUser);
-reducer.post("/update/:id", protectedRoute, updateUser);
+reducer.put("/update/:id", protectedRoute, updateUser);
 
 
 export default reducer;

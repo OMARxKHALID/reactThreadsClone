@@ -1,4 +1,12 @@
-.icon-container{
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
+
+html,
+body,
+#root {
+    font-family: 'Montserrat', sans-serif;
+}
+
+.icon-container {
     border-radius: 50%;
     padding: 8px;
     width: 40px;
@@ -6,6 +14,26 @@
     transition: background-color 0.3s ease-in-out;
 }
 
-.icon-container:hover{
+.icon-container:hover {
     background-color: #595959;
+}
+
+.icon-container:hover {
+    background-color: #1e1e1e;
+}
+
+::-webkit-scrollbar {
+    width: 7px;
+}
+
+::-webkit-scrollbar-track {
+    background-color: #1e1e1e;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #888;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #555;
 }
