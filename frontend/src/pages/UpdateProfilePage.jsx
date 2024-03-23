@@ -18,7 +18,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import useShowToast from '../hooks/useShowToast';
 import { useState } from 'react';
 import usePreviewImg from '../hooks/usePreviewImg';
-import { setUser } from '../redux/authSLice';
+import { setUser } from '../redux/authSlice';
 import { useNavigate } from 'react-router-dom';
 
 export default function UpdateProfilePage() {
@@ -32,7 +32,7 @@ export default function UpdateProfilePage() {
     const { imgUrl, setImgUrl, handleImageChange } = usePreviewImg();
 
     const imgRef = useRef(false);
-    const [isLoading, setIsLoading] = useState(false); 
+    const [isLoading, setIsLoading] = useState(false);
     const [inputs, setInputs] = useState({
         username: user.username,
         name: user.name,
@@ -189,11 +189,11 @@ export default function UpdateProfilePage() {
                             onClick={() =>
                                 navigate(`/${user?.username}`)
                             }
-                            >
+                        >
                             Cancel
                         </Button>
                         <Button
-                            isLoading={isLoading} 
+                            isLoading={isLoading}
                             type="submit"
                             borderRadius="2xl"
                             height="14"
