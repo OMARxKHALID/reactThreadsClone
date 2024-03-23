@@ -25,7 +25,7 @@ import { addPost } from "../redux/postSlice";
 
 const MAX_CHAR = 500;
 
-const CreatePost = () => {
+const CreatePostModel = () => {
     const { isOpen, onOpen, onClose } = useDisclosure();
 
     const [remainingChar, setRemainingChar] = useState(MAX_CHAR);
@@ -70,7 +70,7 @@ const CreatePost = () => {
                 return;
             }
 
-            dispatch(addPost([data]));
+            dispatch(addPost(data));
             showToast("Success", "Thread created successfully", "success");
 
             onClose();
@@ -101,14 +101,14 @@ const CreatePost = () => {
             <Modal isOpen={isOpen} onClose={onClose} size="lg">
                 <ModalOverlay />
 
-                <ModalContent mt={"300px"} bg={"gray.50"} borderRadius="xl">
+                <ModalContent w={"400px"} mt={"250px"} bg={"gray.50"} borderRadius="xl">
                     <ModalHeader fontWeight={"bold"} color={"gray.dark"}>New thread</ModalHeader>
                     <ModalCloseButton color={"gray.dark"} />
                     <ModalBody pb={6}>
                         <FormControl>
                             <Textarea
                                 color={"gray.light"}
-                                placeholder='Post content goes here..'
+                                placeholder='Content goes here..'
                                 _placeholder={{ color: 'gray.light' }}
                                 _focus={{ borderColor: 'gray.light' }}
                                 onChange={handleTextChange}
@@ -173,4 +173,4 @@ const CreatePost = () => {
     )
 }
 
-export default CreatePost;
+export default CreatePostModel;

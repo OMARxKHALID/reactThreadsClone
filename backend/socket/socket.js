@@ -41,11 +41,19 @@ io.on("connection", (socket) => {
       console.log(error);
     }
   });
-  
-  socket.on("typing", ({ conversationId }) => {
-    socket.broadcast
-      .to(conversationId)
-      .emit("typing", { userId: socket.handshake.query.userId });
+
+  socket.on("typing", ({ conversationId, userId }) => {
+    const recipientSocketId = getRecipientSocketId(userId);
+    if (recipientSocketId) {
+      io.to(recipientSocketId).emit("typing", { conversationId, userId });
+    }
+  });
+
+  socket.on("stopTyping", ({ conversationId, userId }) => {
+    const recipientSocketId = getRecipientSocketId(userId);
+    if (recipientSocketId) {
+      io.to(recipientSocketId).emit("stopTyping", { conversationId, userId });
+    }
   });
 
   socket.on("disconnect", () => {

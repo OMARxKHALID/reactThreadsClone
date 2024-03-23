@@ -20,6 +20,7 @@ import useShowToast from "../../hooks/useShowToast";
 import { useDispatch, useSelector } from "react-redux";
 import { useRef, useState } from "react";
 import usePreviewImg from "../../hooks/usePreviewImg";
+import { useSocket } from "../../context/SocketContext";
 
 const MessageInput = () => {
     const [messageText, setMessageText] = useState("");
@@ -31,6 +32,7 @@ const MessageInput = () => {
     const { handleImageChange, imgUrl, setImgUrl } = usePreviewImg();
     const { onClose } = useDisclosure();
     const imageRef = useRef(null);
+    const { socket } = useSocket();
 
     const handleSendMessage = async (e) => {
         e.preventDefault();
@@ -80,6 +82,18 @@ const MessageInput = () => {
             setLoading(false); 
         }
     };
+    
+    const handleTyping = () => {
+        if (selectedConversation) {
+            socket.emit("typing", { conversationId: selectedConversation._id, userId: selectedConversation.userId });
+        }
+    };
+
+    const handleStopTyping = () => {
+        if (selectedConversation) {
+            socket.emit("stopTyping", { conversationId: selectedConversation._id, userId: selectedConversation.userId });
+        }
+    };
 
     return (
         <Flex gap={2} alignItems={"center"}>
@@ -91,7 +105,9 @@ const MessageInput = () => {
                         value={messageText}
                         onChange={(e) => {
                             setMessageText(e.target.value);
+                            handleTyping(); 
                         }}
+                        onBlur={handleStopTyping} 
                     />
                     <InputRightElement onClick={handleSendMessage} cursor={"pointer"}>
                         {loading ? <Spinner size="sm" /> : <IoSendSharp />}

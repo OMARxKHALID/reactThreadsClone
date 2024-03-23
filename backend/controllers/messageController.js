@@ -67,16 +67,13 @@ const getMessages = async (req, res) => {
     });
 
     if (!conversation) {
-      return res.status(404).json({ error: "Conversation not found" });
+      return res.status(200).json([]);
     }
 
     const messages = await Message.find({
       conversationId: conversation._id,
     }).sort({ createdAt: 1 });
 
-    if (messages.length === 0) {
-      return res.status(404).json({ error: "Messages not found" });
-    }
 
     res.status(200).json(messages);
   } catch (err) {
@@ -108,4 +105,24 @@ const getConversations = async(req, res) => {
 
 }
 
-export { sendMessage, getMessages, getConversations };
+const deleteConversationsWithMessages = async (req, res) => {
+  const { conversationId } = req.params;
+
+  try {    
+    await Message.deleteMany({ conversationId });
+    await Conversation.findByIdAndDelete(conversationId);
+    res
+      .status(200)
+      .json({ message: "Conversation and messages deleted successfully" });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+    console.log("Error in deleteConversationsWithMessages:", err);
+  }
+};
+
+export {
+  sendMessage,
+  getMessages,
+  getConversations,
+  deleteConversationsWithMessages,
+};

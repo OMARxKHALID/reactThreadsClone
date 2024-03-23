@@ -35,7 +35,7 @@ const Message = ({ ownMessage, message }) => {
                                 onLoad={() => setImgLoaded(true)}
                                 alt='Message image'
                                 borderRadius={4}
-                                w="100px" 
+                                w="100px"
                                 h="100px"
                             />
                             <Skeleton w={"100px"} h={"100px"} />
@@ -75,8 +75,8 @@ const Message = ({ ownMessage, message }) => {
                                 onLoad={() => setImgLoaded(true)}
                                 alt='Message image'
                                 borderRadius={4}
-                                w="100px" 
-                                h="100px" 
+                                w="100px"
+                                h="100px"
                             />
                             <Skeleton w={"100px"} h={"100px"} />
                         </Flex>

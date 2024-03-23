@@ -7,6 +7,7 @@ import { useEffect, useState } from 'react';
 import { formatDistanceToNow } from 'date-fns'
 import { DeleteIcon } from '@chakra-ui/icons';
 import { setPosts } from '../redux/postSlice';
+import { isValid, parseISO } from 'date-fns';
 
 const Post = ({ post, postedBy }) => {
     const [user, setUser] = useState(null);
@@ -15,12 +16,14 @@ const Post = ({ post, postedBy }) => {
     const dispatch = useDispatch();
     const authUser = useSelector((state) => state.auth.user);
     const posts = useSelector((state) => state.post.posts);
-    if (!post) return null;
+
+    const createdAtDate = isValid(new Date(post?.createdAt)) ? parseISO(post.createdAt) : null;
+    const distanceToNow = createdAtDate ? formatDistanceToNow(createdAtDate) : "";
 
     useEffect(() => {
         const getUserProfile = async () => {
+            if(!postedBy) return null;
             try {
-                setUser(null);
                 const res = await fetch(`/api/users/profile/${postedBy}`);
                 const data = await res.json();
                 if (data.error) {
@@ -34,7 +37,7 @@ const Post = ({ post, postedBy }) => {
             }
         };
         getUserProfile();
-    }, [postedBy, showToast]);
+    }, [postedBy, showToast, setUser]);
 
 
     const handleDeletePost = async (e) => {
@@ -57,7 +60,7 @@ const Post = ({ post, postedBy }) => {
         }
     }
 
-    if (!user) return null;
+    if(!user) return;
 
     return (
         <Link to={`/${user.username}/post/${post._id}`}>
@@ -72,10 +75,20 @@ const Post = ({ post, postedBy }) => {
                     />
                     <Box w='1px' h={"full"} bg="gray.light" my={2}></Box>
                     <Box position={"relative"} w={"full"}>
-                        {post.replies.length === 0 && <Text textAlign={"center"}>🙄</Text>}
-                        {post.replies[0] && (<Avatar src={post.replies[0].userProfilePic} size='xs' position={"absolute"} left={"50%"} transform={"translate(-50%, -50%)"} padding={"2px"} top={'18px'} />)}
-                        {post.replies[1] && (<Avatar size='xs' src={post.replies[1].userProfilePic} position={"absolute"} right={"-3px"} padding={"2px"} top={'50%'} transform={"translateY(-50%)"} />)}
-                        {post.replies[2] && (<Avatar size='xs' src={post.replies[0].userProfilePic} position={"absolute"} left={"-3px"} padding={"2px"} top={'50%'} transform={"translateY(-50%)"} />)}
+                        {post?.replies && post?.replies?.length > 0 && (
+                            <>
+                                {post.replies[0] && (
+                                    <Avatar src={post.replies[0].userProfilePic} size='xs' position={"absolute"} left={"50%"} transform={"translate(-50%, -50%)"} padding={"2px"} top={'18px'} />
+                                )}
+                                {post.replies[1] && (
+                                    <Avatar size='xs' src={post.replies[1].userProfilePic} position={"absolute"} right={"-3px"} padding={"2px"} top={'50%'} transform={"translateY(-50%)"} />
+                                )}
+                                {post.replies[2] && (
+                                    <Avatar size='xs' src={post.replies[2].userProfilePic} position={"absolute"} left={"-3px"} padding={"2px"} top={'50%'} transform={"translateY(-50%)"} />
+                                )}
+                            </>
+                        )}
+
                     </Box>
                 </Flex>
                 <Flex flex={1} flexDirection={"column"} gap={2}>
@@ -90,7 +103,7 @@ const Post = ({ post, postedBy }) => {
                             <Image src='/verified.png' w={4} h={4} ml={1} />
                         </Flex>
                         <Flex alignItems={"center"}>
-                            <Text fontSize={"xs"} width={36} textAlign={"right"} color={"gray.light"}>{formatDistanceToNow(new Date(post.createdAt))}</Text>
+                            <Text fontSize={"xs"} width={36} textAlign={"right"} color={"gray.light"}>{distanceToNow}</Text>
 
                             {authUser?._id === user._id && <DeleteIcon ml={2} cursor="pointer" size={20} color={"gray.light"} onClick={handleDeletePost} />}
                         </Flex>

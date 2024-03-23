@@ -10,7 +10,6 @@ const HomePage = () => {
   const showToast = useShowToast();
   const dispatch = useDispatch();
   const posts = useSelector((state) => state.post.posts) || []; 
-  if(!posts) return;
 
   useEffect(() => {
     const getFeedPosts = async () => {
@@ -31,6 +30,7 @@ const HomePage = () => {
 
     getFeedPosts();
   }, [showToast, dispatch]);
+  if (!posts) return;
 
   const post = useMemo(() => (
     posts.map((post) => (

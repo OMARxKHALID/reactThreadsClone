@@ -35,7 +35,7 @@ const UserPage = () => {
     };
 
     getPosts();
-  }, [username]);
+  }, [username, setPosts, dispatch]);
 
   const noThreads = !fetching && posts.length === 0 && !userProfileLoading;
 

@@ -18,8 +18,7 @@ const PostPage = () => {
   const user = useSelector(state => state.auth.userProfile);
   const authUser = useSelector(state => state.auth.user);
   const post = useSelector((state) => state.post.posts[0]);
-  console.log(post)
-
+  
   // Ensure createdAt is a valid date string
   const createdAtDate = isValid(new Date(post?.createdAt)) ? parseISO(post.createdAt) : null;
   const distanceToNow = createdAtDate ? formatDistanceToNow(createdAtDate) : "";
@@ -46,7 +45,7 @@ const PostPage = () => {
     };
 
     getPost();
-  }, [pid, showToast, user]);
+  }, [pid, showToast, user, setPosts, dispatch]);
 
   const handleDeletePost = async (e) => {
     try {
@@ -87,7 +86,7 @@ const PostPage = () => {
       </Flex>
     );
   }
-    
+
   return (
     <>
       <Flex>
@@ -120,11 +119,11 @@ const PostPage = () => {
         <Divider borderColor={"gray.light"} mt={4} />
       )}
 
-      {post?.replies?.map((reply,index) => (
+      {post?.replies?.map((reply) => (
         <Comment
-          key={index}
+          key={reply._id}
           reply={reply}
-          lastReply={reply?._id === post?.replies[post?.replies?.length - 1]?._id}
+          lastReply={reply._id === post?.replies[post?.replies?.length - 1]?._id}
         />
       ))}
     </>

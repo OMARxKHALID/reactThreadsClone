@@ -4,8 +4,9 @@ import { useSelector } from 'react-redux';
 import { RxAvatar } from 'react-icons/rx';
 import { AiFillHome } from 'react-icons/ai';
 import LogoutButton from './LogoutButton';
-import CreatePost from './CreatePost';
 import { GrChat } from "react-icons/gr";
+import { FiSearch } from "react-icons/fi";
+import CreatePostModel from "../models/CreatePostModel";
 
 const Header = () => {
     const { colorMode, toggleColorMode } = useColorMode();
@@ -19,7 +20,12 @@ const Header = () => {
                         <AiFillHome size={25} />
                     </Link>
                 )}
-                {user && <CreatePost />}
+                {user && <CreatePostModel />}
+                {user && (
+                    <Link as={RouterLink} to="/search">
+                        <FiSearch size={25} />
+                    </Link>
+                )}
             </Flex>
 
             <Grid placeItems="center">

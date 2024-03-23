@@ -6,7 +6,7 @@ import Conversation from '../components/messageComponents/Conversation';
 import MessageContainer from '../components/messageComponents/MessageContainer';
 import useShowToast from '../hooks/useShowToast';
 import { useDispatch, useSelector } from 'react-redux';
-import { setConversations, setMessages, setSelectedConversation } from '../redux/messageSlice';
+import { setConversations, setSelectedConversation } from '../redux/messageSlice';
 import { useSocket } from "../context/SocketContext";
 
 const ChatPage = () => {
@@ -99,7 +99,6 @@ const ChatPage = () => {
 
             if (searchText === selectedConversation?.username) {
                 showToast("Info", "User is already exist in the conversation", "info");
-                dispatch(setMessages([]));
                 return;
             }
 
@@ -194,7 +193,7 @@ const ChatPage = () => {
                         ))
                     ) : conversations.length === 0 ? (
                             <Flex justifyContent="center" alignItems="center">
-                            <Text fontSize={10}>No conversation found.</Text>
+                            <Text fontSize={15}>No conversation found.</Text>
                             </Flex>
                     ) : (
                         conversations.map((conversation) => (

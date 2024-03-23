@@ -1,16 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
 import {
-    Button,
     Flex,
-    FormControl,
-    Input,
-    Modal,
-    ModalBody,
-    ModalCloseButton,
-    ModalContent,
-    ModalFooter,
-    ModalHeader,
-    ModalOverlay,
     Text,
     Box,
     useDisclosure,
@@ -18,6 +8,7 @@ import {
 import { useState } from "react";
 import useShowToast from '../hooks/useShowToast';
 import { setPosts } from '../redux/postSlice';
+import ReplyModel from '../models/ReplyModel';
 
 const Actions = ({ post }) => {
     const { isOpen, onOpen, onClose } = useDisclosure();
@@ -161,44 +152,13 @@ const Actions = ({ post }) => {
                 <Box w={0.5} h={0.5} bg={"gray.light"} borderRadius={"full"}></Box>
                 <Text color={"gray.light"} fontSize={"sm"}>{post?.replies?.length} replies</Text>
             </Flex>
-            <Modal isOpen={isOpen} onClose={onClose} size="lg">
-                <ModalOverlay />
-
-                <ModalContent mt={"300px"} bg={"gray.50"} borderRadius="xl">
-                    <ModalHeader></ModalHeader>
-                    <ModalCloseButton color={"gray.dark"} />
-                    <ModalBody pb={6}>
-                        <FormControl>
-                            <Input
-                                color={"gray.light"}
-                                _placeholder={{ color: 'gray.light' }}
-                                _focus={{ borderColor: 'gray.light' }}
-                                placeholder='Reply goes here..'
-                                value={reply}
-                                onChange={(e) => setReply(e.target.value)}
-                            />
-                        </FormControl>
-                    </ModalBody>
-
-                    <ModalFooter>
-                        <Button
-                            borderRadius="2xl"
-                            height="14"
-                            size="lg"
-                            bg={'gray.dark'}
-                            color={'gray.light'}
-                            _hover={{
-                                bg: 'black',
-                            }}
-                            w={"full"}
-                            isLoading={isReplying}
-                            onClick={handleReply}
-                            fontWeight={"bold"}>
-                            Post
-                        </Button>
-                    </ModalFooter>
-                </ModalContent>
-            </Modal>
+            <ReplyModel
+                isOpen={isOpen}
+                onClose={onClose}
+                reply={reply}
+                setReply={setReply}
+                handleReply={handleReply}
+            /> 
         </Flex>
 
     );

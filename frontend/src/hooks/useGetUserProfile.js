@@ -14,7 +14,7 @@ const useGetUserProfile = () => {
   useEffect(() => {
     const getUser = async () => {
       try {
-        dispatch(setUserProfile(null));
+        // dispatch(setUserProfile(null));
         const res = await fetch(`/api/users/profile/${username}`);
         const data = await res.json();
         if (data.error) {
