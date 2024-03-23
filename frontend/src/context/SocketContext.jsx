@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import io from "socket.io-client";
-import {useSelector} from "react-redux";
+import { useSelector } from "react-redux";
 
 const SocketContext = createContext();
 
@@ -14,7 +14,7 @@ export const SocketContextProvider = ({ children }) => {
     const user = useSelector((state) => state.auth.user);
 
     useEffect(() => {
-        const socket = io("http://localhost:5000", {
+        const socket = io("https://reactthreadsclone.onrender.com", {
             query: {
                 userId: user?._id,
             },
