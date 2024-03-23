@@ -1,4 +1,4 @@
-# Threads Clone WEb App with Real-Time Chat Functionality
+# Threads Clone with Real-Time Chat Functionality
 
 Welcome to MERN Stack THread Clone! This is a social media platform built using the MERN (MongoDB, Express.js, React.js, Node.js) stack, Socket.io for real-time communication, and Chakra UI for the user interface. It offers various features including authentication, post creation, deletion, liking/unliking posts, commenting, following/unfollowing users, account freezing, dark/light mode, and a responsive design. Additionally, it includes a chat application with image support, seen/unseen status for messages, and notification sounds.
 
