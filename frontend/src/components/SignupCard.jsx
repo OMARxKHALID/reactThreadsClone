@@ -14,7 +14,7 @@ import {
     Divider,
 } from '@chakra-ui/react'
 import { useDispatch } from 'react-redux';
-import { changeState, setUser } from '../redux/authSLice';
+import { changeState, setUser } from '../redux/authSlice';
 import { useState } from 'react';
 import useShowToast from '../hooks/useShowToast';
 
@@ -24,7 +24,7 @@ export default function SignupCard() {
     const dispatch = useDispatch();
     const showToast = useShowToast();
 
-    const [isLoading, setIsLoading] = useState(false); 
+    const [isLoading, setIsLoading] = useState(false);
     const [inputs, setInputs] = useState({
         username: "",
         name: "",
@@ -33,7 +33,7 @@ export default function SignupCard() {
     });
 
     const handleSignUp = async () => {
-        setIsLoading(true); 
+        setIsLoading(true);
         try {
             const res = await fetch("/api/users/signup", {
                 method: "POST",
@@ -54,7 +54,7 @@ export default function SignupCard() {
         } catch (error) {
             showToast("Error", error, "error");
             setIsLoading(false);
-        } 
+        }
     }
     return (
         <>
@@ -125,7 +125,7 @@ export default function SignupCard() {
                             </FormControl>
                             <Stack spacing={10} pt={2}>
                                 <Button
-                                    isLoading={isLoading} 
+                                    isLoading={isLoading}
                                     borderRadius="2xl"
                                     height="14"
                                     size="lg"

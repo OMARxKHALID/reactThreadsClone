@@ -1,9 +1,8 @@
 import { Button } from '@chakra-ui/react';
-import React from 'react';
 import { MdLogout } from "react-icons/md";
 import useShowToast from '../hooks/useShowToast';
 import { useDispatch } from 'react-redux';
-import { setLogout } from '../redux/authSLice';
+import { setLogout } from '../redux/authSlice';
 import { emptyPosts } from '../redux/postSlice';
 import { setConversations, setMessages, setSelectedConversation } from '../redux/messageSlice';
 
@@ -36,10 +35,10 @@ const LogoutButton = () => {
     }
     return (
         <Button
-            size={0}     
+            size={0}
             onClick={handleLogout}
-            colorScheme="none" 
-            variant="unstyled" 
+            colorScheme="none"
+            variant="unstyled"
         >
             <MdLogout size={25} />
         </Button>
