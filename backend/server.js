@@ -1,3 +1,4 @@
+import path from "path";
 import express from "express";
 import dotenv from "dotenv";
 import connectDB from "./db/connectDB.js";
@@ -5,31 +6,47 @@ import cookieParser from "cookie-parser";
 import userRoutes from "./routes/userRoutes.js";
 import postRoutes from "./routes/postRoutes.js";
 import messageRoutes from "./routes/messageRoutes.js";
-import {v2 as cloudinary} from "cloudinary";
+import { v2 as cloudinary } from "cloudinary";
 import { app, server } from "./socket/socket.js";
+import fs from "fs";
 
 dotenv.config();
 
 connectDB();
 
 const PORT = process.env.PORT || 5000;
+const __dirname = path.resolve();
 
-// cloudinary 
+// cloudinary
 cloudinary.config({
-    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-    api_key: process.env.CLOUDINARY_API_KEY,
-    api_secret: process.env.CLOUDINARY_API_SECRET
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
-app.use(express.json({limit: "50mb"})); // to parse JSON data into req.body
-app.use(express.urlencoded({ extended: true })); // to parse form data into req.body
-app.use(cookieParser()); // to parse cookies from req.headers.cookie
+app.use(express.json({ limit: "50mb" }));
+app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
 
 // routes
 app.use("/api/users", userRoutes);
 app.use("/api/posts", postRoutes);
 app.use("/api/messages", messageRoutes);
 
+// Serve static files if in production
+if (process.env.NODE_ENV === "production") {
+  const frontendDistDir = path.join(__dirname, "frontend", "dist");
+  if (fs.existsSync(frontendDistDir)) {
+    app.use(express.static(frontendDistDir));
+
+    app.get("*", (req, res) => {
+      res.sendFile(path.resolve(frontendDistDir, "index.html"));
+    });
+  } else {
+    console.error("Frontend dist directory not found.");
+  }
+}
+
 server.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
-});  
+  console.log(`Server is running on port ${PORT}`);
+});

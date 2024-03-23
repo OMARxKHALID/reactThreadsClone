@@ -1,15 +1,16 @@
 {
   "name": "backend",
   "version": "1.0.0",
-  "description": "",
+  "description": "A backend application for managing threads.",
   "main": "server.js",
   "scripts": {
-    "dev": "nodemon server.js",
-    "start": "node server.js"
+    "dev": "set NODE_ENV=development&& nodemon backend/server.js",
+    "start": "set NODE_ENV=production&& node backend/server.js",
+    "build": "npm install && npm install --prefix frontend && npm run build --prefix frontend"
   },
   "type": "module",
   "keywords": [],
-  "author": "",
+  "author": "OMAR",
   "license": "ISC",
   "dependencies": {
     "bcryptjs": "^2.4.3",
